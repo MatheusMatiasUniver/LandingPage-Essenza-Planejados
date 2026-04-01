@@ -1,27 +1,15 @@
 ---
-import MainLayout from '../layouts/MainLayout.astro';
+import MainLayout from "../layouts/MainLayout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
 ---
 
-<MainLayout>
-  <main id="inicio">
-    <!-- Header será adicionado na Etapa 3 -->
-    <!-- Hero será adicionado na Etapa 3 -->
+<MainLayout
+  >Essenza Landing Page index.astro
 
-    <!-- Placeholder temporário para validar a base do projeto -->
-    <section class="min-h-screen flex items-center justify-center bg-off-white">
-      <div class="text-center px-6">
-        <span class="inline-block text-accent font-medium tracking-widest uppercase text-sm mb-4">
-          Base do projeto configurada
-        </span>
-        <h1 class="font-heading text-4xl md:text-6xl text-charcoal mb-6">
-          Essenza Planejados
-        </h1>
-        <p class="text-warm-gray text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
-          Tailwind CSS v4 + Astro v6 + TypeScript — tudo funcionando.
-          As seções serão construídas nas próximas etapas.
-        </p>
-        <div class="w-16 h-0.5 bg-accent mx-auto"></div>
-      </div>
-    </section>
+  <Header />
+
+  <main>
+    <Hero />
   </main>
 </MainLayout>

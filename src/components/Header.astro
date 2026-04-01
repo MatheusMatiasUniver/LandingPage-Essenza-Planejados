@@ -1,0 +1,124 @@
+---
+import { company, nav } from '../data/site';
+import Button from './ui/Button.astro';
+---
+
+<header
+  id="header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-transparent"
+>
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20 lg:h-24">
+
+      <!-- Logo -->
+      <a href="#inicio" class="flex items-center gap-2 group" aria-label="Ir para o início">
+        <span class="font-heading text-2xl lg:text-[1.7rem] font-bold text-charcoal tracking-tight transition-colors duration-300">
+          Essenza
+        </span>
+        <span class="font-heading text-2xl lg:text-[1.7rem] font-normal text-accent tracking-tight transition-colors duration-300">
+          Planejados
+        </span>
+      </a>
+
+      <!-- Nav Desktop -->
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Navegação principal">
+        {nav.links.map((link) => (
+          <a
+            href={link.href}
+            class="px-3 py-2 text-sm font-medium text-graphite/80 hover:text-accent transition-colors duration-300 tracking-wide"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- CTA Desktop -->
+      <div class="hidden lg:block">
+        <Button href={nav.cta.href} variant="primary" size="sm">
+          {nav.cta.label}
+        </Button>
+      </div>
+
+      <!-- Botão Mobile -->
+      <button
+        id="mobile-menu-btn"
+        class="lg:hidden flex flex-col items-center justify-center w-10 h-10 gap-1.5 group cursor-pointer"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.active]:rotate-45 group-[.active]:translate-y-2"></span>
+        <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 group-[.active]:opacity-0"></span>
+        <span class="block w-6 h-0.5 bg-charcoal transition-all duration-300 origin-center group-[.active]:-rotate-45 group-[.active]:-translate-y-2"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menu Mobile -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden fixed inset-0 top-20 bg-white/98 backdrop-blur-lg z-40 transition-all duration-500 opacity-0 -translate-y-4 pointer-events-none"
+    aria-hidden="true"
+  >
+    <nav class="flex flex-col items-center justify-center gap-6 pt-12 px-6" aria-label="Navegação mobile">
+      {nav.links.map((link) => (
+        <a
+          href={link.href}
+          class="mobile-nav-link text-xl font-medium text-charcoal hover:text-accent transition-colors duration-300 tracking-wide"
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="mt-4">
+        <Button href={nav.cta.href} variant="primary" size="md">
+          {nav.cta.label}
+        </Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // === Menu Mobile Toggle ===
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const header = document.getElementById('header');
+
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.classList.toggle('active');
+      menu.classList.toggle('opacity-0', !isOpen);
+      menu.classList.toggle('-translate-y-4', !isOpen);
+      menu.classList.toggle('pointer-events-none', !isOpen);
+      menu.setAttribute('aria-hidden', String(!isOpen));
+      btn.setAttribute('aria-expanded', String(isOpen));
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Fecha menu ao clicar em link
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        btn.classList.remove('active');
+        menu.classList.add('opacity-0', '-translate-y-4', 'pointer-events-none');
+        menu.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+
+  // === Header scroll effect — background + shadow ===
+  if (header) {
+    const onScroll = () => {
+      if (window.scrollY > 60) {
+        header.classList.add('bg-white/95', 'backdrop-blur-lg', 'shadow-soft');
+        header.classList.remove('bg-transparent');
+      } else {
+        header.classList.remove('bg-white/95', 'backdrop-blur-lg', 'shadow-soft');
+        header.classList.add('bg-transparent');
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // estado inicial
+  }
+</script>

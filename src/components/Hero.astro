@@ -1,0 +1,120 @@
+---
+import { Image } from 'astro:assets';
+import { hero } from '../data/site';
+import Button from './ui/Button.astro';
+import heroImage from '../assets/images/hero-main.png';
+---
+
+<section id="inicio" class="relative min-h-screen flex items-center overflow-hidden bg-off-white">
+
+  <!-- Background decorativo -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <!-- Gradiente sutil superior -->
+    <div class="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-white/60 to-transparent"></div>
+    <!-- Círculo decorativo -->
+    <div class="absolute -right-32 top-1/4 w-[500px] h-[500px] rounded-full bg-cream/50 blur-3xl"></div>
+    <div class="absolute -left-20 bottom-1/4 w-[300px] h-[300px] rounded-full bg-accent/5 blur-3xl"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 w-full pt-28 pb-16 lg:pt-32 lg:pb-20">
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+      <!-- Coluna de texto -->
+      <div class="relative z-10 order-2 lg:order-1">
+        <!-- Badges de autoridade -->
+        <div class="flex flex-wrap gap-3 mb-8">
+          {hero.badges.map((badge) => (
+            <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-cream text-accent text-xs font-semibold tracking-wider uppercase border border-accent/10">
+              {badge}
+            </span>
+          ))}
+        </div>
+
+        <!-- Headline -->
+        <h1 class="font-heading text-4xl sm:text-5xl lg:text-[3.5rem] xl:text-6xl text-charcoal leading-[1.1] mb-6">
+          {hero.headline}
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="text-warm-gray text-lg sm:text-xl leading-relaxed max-w-xl mb-10">
+          {hero.subheadline}
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex flex-col sm:flex-row gap-4 mb-12">
+          <Button href={hero.ctaPrimary.href} variant="primary" size="lg" id="hero-cta-primary">
+            {hero.ctaPrimary.label}
+          </Button>
+          <Button href={hero.ctaSecondary.href} variant="outline" size="lg" id="hero-cta-secondary">
+            {hero.ctaSecondary.label}
+          </Button>
+        </div>
+
+        <!-- Micro-prova social -->
+        <div class="flex items-center gap-4 text-sm text-warm-gray">
+          <div class="flex -space-x-2" aria-hidden="true">
+            {[1,2,3,4].map((i) => (
+              <div class={`w-9 h-9 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white ${
+                i === 1 ? 'bg-accent' : i === 2 ? 'bg-accent-dark' : i === 3 ? 'bg-graphite' : 'bg-warm-gray'
+              }`}>
+                {['AC', 'RF', 'MO', 'JP'][i - 1]}
+              </div>
+            ))}
+          </div>
+          <div>
+            <span class="font-semibold text-charcoal">+450 clientes</span> satisfeitos
+          </div>
+        </div>
+      </div>
+
+      <!-- Coluna da imagem -->
+      <div class="relative order-1 lg:order-2">
+        <!-- Moldura decorativa -->
+        <div class="absolute -inset-4 bg-gradient-to-br from-accent/10 via-transparent to-cream/50 rounded-2xl" aria-hidden="true"></div>
+        <div class="absolute top-6 -right-3 w-24 h-24 border-2 border-accent/20 rounded-2xl" aria-hidden="true"></div>
+        <div class="absolute -bottom-3 -left-3 w-32 h-32 border-2 border-accent/10 rounded-2xl" aria-hidden="true"></div>
+
+        <!-- Imagem principal -->
+        <div class="relative rounded-2xl overflow-hidden shadow-elevated">
+          <Image
+            src={heroImage}
+            alt="Cozinha planejada de alto padrão com acabamentos sofisticados — projeto Essenza Planejados"
+            class="w-full h-[400px] sm:h-[480px] lg:h-[560px] object-cover"
+            widths={[480, 768, 1024]}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            quality={85}
+            loading="eager"
+          />
+          <!-- Overlay sutil -->
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal/10 via-transparent to-transparent"></div>
+        </div>
+
+        <!-- Card flutuante -->
+        <div class="absolute -bottom-6 -left-4 sm:left-4 bg-white rounded-xl shadow-card p-4 sm:p-5 max-w-[220px] border border-cream">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-charcoal">Qualidade</p>
+              <p class="text-xs text-warm-gray">garantida</p>
+            </div>
+          </div>
+          <p class="text-xs text-warm-gray leading-relaxed">
+            Cada projeto com acabamento impecável e acompanhamento completo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce" aria-hidden="true">
+    <span class="text-xs text-warm-gray tracking-widest uppercase">Saiba mais</span>
+    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>
